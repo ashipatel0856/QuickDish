@@ -4,7 +4,6 @@ import com.ashish.QuickDish.dto.LoginDto;
 import com.ashish.QuickDish.dto.SignUpRequestDto;
 import com.ashish.QuickDish.dto.UserDto;
 import com.ashish.QuickDish.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,7 +31,7 @@ public class AuthService {
     public UserDto SignUp (SignUpRequestDto signUpRequestDto) {
         User user = userRepository.findByEmail(signUpRequestDto.getEmail()).orElse(null);
         if (user != null) {
-            throw new RuntimeException("Email already in use");
+            throw new RuntimeException("Email has already exists");
         }
         User newUser = modelMapper.map(signUpRequestDto, User.class);
         newUser.setPassword(passwordEncoder.encode(signUpRequestDto.getPassword()));
@@ -41,7 +40,7 @@ public class AuthService {
     }
 
 
-    public String[] login(LoginDto loginDto){
+    public String[] Login(LoginDto loginDto){
         Authentication authentication =
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                         loginDto.getEmail(),loginDto.getPassword()));
