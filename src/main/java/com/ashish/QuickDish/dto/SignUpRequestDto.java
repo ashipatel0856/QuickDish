@@ -2,11 +2,7 @@ package com.ashish.QuickDish.dto;
 
 import lombok.*;
 
-@Data
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class SignUpRequestDto {
     private Long id;
     private String email;
