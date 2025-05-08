@@ -2,21 +2,12 @@ package com.ashish.QuickDish.dto;
 
 import lombok.*;
 
-
+@Data
 public class SignUpRequestDto {
-    private Long id;
     private String email;
     private String password;
     private String name;
-    private String phone;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getEmail() {
         return email;
@@ -42,11 +33,5 @@ public class SignUpRequestDto {
         this.name = name;
     }
 
-    public String getPhone() {
-        return phone;
-    }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 }

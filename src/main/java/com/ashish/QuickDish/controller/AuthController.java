@@ -12,14 +12,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
-
-@RestController
+@Controller
 @RequestMapping("/auth")
 public class AuthController {
     private final AuthService authService;
@@ -28,7 +28,7 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @PostMapping( "/signup")
+    @PostMapping( "/signup/ash")
     public ResponseEntity<UserDto> SignUp(@RequestBody SignUpRequestDto signUpRequestDto) {
         UserDto userDto = authService.SignUp(signUpRequestDto);
         return new ResponseEntity<>(userDto, HttpStatus.CREATED);
