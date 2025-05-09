@@ -1,5 +1,6 @@
 package com.ashish.QuickDish.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,6 +18,7 @@ public class Review {
     private LocalDateTime date;
 
     @ManyToOne
+    @JsonIgnore
     private User user;
 
     @ManyToOne

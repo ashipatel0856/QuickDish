@@ -1,5 +1,6 @@
 package com.ashish.QuickDish.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -13,6 +14,7 @@ public class Cart {
     private Long id;
 
     @OneToOne
+    @JsonBackReference
     private User user;
 
     @OneToMany(mappedBy = "cart",cascade = CascadeType.ALL)

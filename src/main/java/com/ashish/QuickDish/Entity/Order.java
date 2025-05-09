@@ -1,6 +1,7 @@
 package com.ashish.QuickDish.Entity;
 
 import com.ashish.QuickDish.Entity.enums.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Data
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +21,7 @@ public class Order {
     private Restaurant restaurant;
 
     @ManyToOne
+    @JsonIgnore
     private User customer;
 
     @Enumerated(EnumType.STRING)
