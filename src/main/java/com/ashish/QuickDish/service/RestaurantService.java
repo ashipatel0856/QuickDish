@@ -9,6 +9,6 @@ public interface RestaurantService {
     List<RestaurantDto> getAllRestaurants();
     RestaurantDto getRestaurantById(Long id);
     RestaurantDto updateRestaurantById(Long restId,RestaurantDto restaurantDto);
-    Void deleteRestaurantById(Long id);
+    void deleteRestaurantById(Long id);
 
 }
