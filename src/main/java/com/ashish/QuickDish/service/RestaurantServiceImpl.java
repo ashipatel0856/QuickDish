@@ -66,10 +66,13 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public Void deleteRestaurantById(Long id) {
-        log.info("restaurant is deleted with id");
-        Restaurant restaurant = restaurantRepository.findById(id).orElseThrow(() ->
-                new ResourceNotFoundException("Restauranr does not is exits with id"));
-     restaurantRepository.deleteById(id);
+    public void deleteRestaurantById(Long id) {
+        log.info("Deleting restaurant with id: {}", id);
+
+        Restaurant restaurant = restaurantRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Restaurant does not exist with id: " + id));
+
+        restaurantRepository.deleteById(id);
     }
+
 }
