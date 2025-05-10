@@ -2,6 +2,7 @@ package com.ashish.QuickDish.Entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.antlr.v4.runtime.CodePointBuffer;
 
 @Entity
 @Data
@@ -17,6 +18,9 @@ public class CartItem {
 
     @ManyToOne
     private FoodItem foodItem;
+
+    private Long userId;
+
 
     public Long getId() {
         return id;
@@ -48,5 +52,13 @@ public class CartItem {
 
     public void setFoodItem(FoodItem foodItem) {
         this.foodItem = foodItem;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }
