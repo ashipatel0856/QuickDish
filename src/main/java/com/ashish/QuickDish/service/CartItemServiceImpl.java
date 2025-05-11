@@ -85,6 +85,7 @@ public class CartItemServiceImpl implements CartItemService {
         cartitem.setQuantity(quantity);
         double unitPrice = cartitem.getFoodItem().getPrice();
         cartitem.setUnitPrice(unitPrice);
+        cartitem.setCart(cartRepository.findById(cartItemId).get());
         cartitem.setUserId(cartitem.getUserId());
         cartitem.setTotalPrice(unitPrice * quantity);
         CartItem saved = cartItemRepository.save(cartitem);

@@ -42,7 +42,7 @@ public class User implements UserDetails {
     private Set<Role> role;
 
     private String phone;
-    private LocalDateTime createdAt;
+
 
     @OneToMany(mappedBy = "customer")
     @JsonManagedReference
@@ -112,13 +112,7 @@ public class User implements UserDetails {
         this.phone = phone;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
 
     public List<Order> getOrders() {
         return orders;
