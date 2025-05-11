@@ -12,6 +12,10 @@ public class CartItem {
     private Long id;
 
     private int quantity;
+    @Column(nullable = false)
+    private double unitPrice;
+    @Column(nullable = false)
+    private double totalPrice;;
 
     @ManyToOne
     private Cart cart;
@@ -60,5 +64,21 @@ public class CartItem {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public double getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(double unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }
