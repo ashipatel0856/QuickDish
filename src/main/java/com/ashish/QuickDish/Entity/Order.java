@@ -1,15 +1,19 @@
 package com.ashish.QuickDish.Entity;
 
 import com.ashish.QuickDish.Entity.enums.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "orders")
 public class Order {
     @Id
@@ -21,7 +25,7 @@ public class Order {
     private Restaurant restaurant;
 
     @ManyToOne
-    @JsonIgnore
+    @JsonBackReference
     private User customer;
 
     @Enumerated(EnumType.STRING)
@@ -29,8 +33,10 @@ public class Order {
 
     private double totalPrice;
 
-    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
-    private List<OrderItem> orderItems;
+//    @ManyToOne
+//    @JoinColumn(name = "order_id")
+//    private Order order;
+
 
     @OneToOne(mappedBy = "order",cascade = CascadeType.ALL)
     private Payment payment;

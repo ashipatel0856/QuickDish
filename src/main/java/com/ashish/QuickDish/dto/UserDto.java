@@ -1,8 +1,9 @@
 package com.ashish.QuickDish.dto;
-
-import jakarta.persistence.Column;
+import com.ashish.QuickDish.Entity.Address;
+import com.ashish.QuickDish.Entity.enums.Role;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -12,7 +13,8 @@ public class UserDto {
     private Long id;
     private String email;
     private String  name;
-//    private Address address
+    private Address address;
+    private Set<Role> role;
 
     public Long getId() {
         return id;
@@ -38,19 +40,15 @@ public class UserDto {
         this.name = name;
     }
 
-//    public Address getAddress() {
-//        return address;
-//    }
-//
-//    public void setAddress(Address address) {
-//        this.address = address;
-//    }
-//
-//    public Review getReview() {
-//        return review;
-//    }
-//
-//    public void setReview(Review review) {
-//        this.review = review;
-//    }
+    public Set<Role> getRole() {
+        return role;
+    }
+
+    public void setRole(Set<Role> role) {
+        this.role = role;
+    }
+
+
+
+
 }

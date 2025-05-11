@@ -1,5 +1,6 @@
 package com.ashish.QuickDish.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,9 +31,11 @@ public class Restaurant {
     private List<FoodItem> foodItemList;
 
     @OneToMany(mappedBy = "restaurant")
+    @JsonIgnore
     private List<Order> orders;
 
-    @OneToMany(mappedBy = "restaurant")
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Review> reviews;
 
     public boolean isApproved() {

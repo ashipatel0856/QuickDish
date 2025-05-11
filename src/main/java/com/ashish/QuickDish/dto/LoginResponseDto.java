@@ -4,20 +4,17 @@ import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class LoginResponseDto {
     private String accessToken;
-    private String refreshToken;
+//    private String refreshToken;
 
-//    public LoginResponseDto(Long id, String accessToken, String refreshToken) {
-//        this.accessToken = accessToken;
-//        this.refreshToken = refreshToken;
-//
-//    }
 
-    public LoginResponseDto(String token) {
-        this.accessToken = token;
+
+
+
+    public LoginResponseDto(String accessToken) {
+        this.accessToken = accessToken;
     }
 
 //

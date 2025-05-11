@@ -16,9 +16,9 @@ public class CartItemController {
         this.cartItemService = cartItemService;
     }
 
-    @PostMapping
-    public ResponseEntity<CartItemResponseDto> addToCart(@RequestBody CartItemResponseDto cartItemResponseDto) {
-       CartItemResponseDto cartItemResponseDto1 = cartItemService.addToCart(cartItemResponseDto);
+    @PostMapping("/{userId}")
+    public ResponseEntity<CartItemResponseDto> addToCart( @RequestBody CartItemResponseDto cartItemResponseDto ,@PathVariable Long userId) {
+       CartItemResponseDto cartItemResponseDto1 = cartItemService.addToCart(cartItemResponseDto, userId);
        return ResponseEntity.ok(cartItemResponseDto1);
     }
 

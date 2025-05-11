@@ -9,7 +9,7 @@ import lombok.*;
 public class CartRequestDto {
     private Long foodItemId;
     private int quantity;
-    private Long userId;
+
 
     public Long getFoodItemId() {
         return foodItemId;
@@ -27,11 +27,5 @@ public class CartRequestDto {
         this.quantity = quantity;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 }

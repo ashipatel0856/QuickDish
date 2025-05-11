@@ -1,9 +1,12 @@
 package com.ashish.QuickDish.dto;
 
+import com.ashish.QuickDish.Entity.enums.Role;
 import lombok.*;
 
+import java.util.Set;
+
 @Getter
-@Data
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class SignupDto {
@@ -11,6 +14,15 @@ public class SignupDto {
     private String name;
     private String email;
     private String password;
+    private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public void setEmail(String email) {
         this.email = email;

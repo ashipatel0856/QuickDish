@@ -1,21 +1,28 @@
 package com.ashish.QuickDish.Entity;
 
 import com.ashish.QuickDish.Entity.enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = {"orders", "address", "cart", "reviews"})
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,14 +37,16 @@ public class User {
 
     private Boolean isVerified;
 
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Set<Role> role;
 
     private String phone;
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "customer")
-   private List<Order> orders;
+    @JsonManagedReference
+    private List<Order> orders;
 
     @Embedded
     private Address address;
@@ -46,6 +55,7 @@ public class User {
     private Cart cart;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Review> reviews;
 
     public Long getId() {
@@ -64,16 +74,14 @@ public class User {
         this.email = email;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
 
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 
     public void setPassword(String password) {
@@ -143,4 +151,31 @@ public class User {
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
+
+    public Set<Role> getRole() {
+        return role;
+    }
+
+    public void setRole(Set<Role> role) {
+        this.role = role;
+    }
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+            return role.stream()
+                    .map(r -> new SimpleGrantedAuthority("ROLE_" + r.name()))
+                    .collect(Collectors.toSet());
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User user)) return false;
+        return Objects.equals(getId(), user.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
+
+
 }
