@@ -1,12 +1,15 @@
 package com.ashish.QuickDish.Entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +19,7 @@ public class Payment {
     private boolean success;
 
     @OneToOne
+    @JoinColumn(name = "order_id")
     private Order order;
 
     private LocalDateTime paymentDate;

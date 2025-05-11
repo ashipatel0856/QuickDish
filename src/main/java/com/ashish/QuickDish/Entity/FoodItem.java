@@ -1,12 +1,15 @@
 package com.ashish.QuickDish.Entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
-@Data
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class FoodItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

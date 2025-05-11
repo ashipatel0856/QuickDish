@@ -1,11 +1,16 @@
 package com.ashish.QuickDish.service;
 
+import com.ashish.QuickDish.Entity.Cart;
 import com.ashish.QuickDish.Entity.CartItem;
 import com.ashish.QuickDish.Entity.FoodItem;
+import com.ashish.QuickDish.Entity.User;
 import com.ashish.QuickDish.dto.CartItemResponseDto;
 import com.ashish.QuickDish.exceptions.ResourceNotFoundException;
 import com.ashish.QuickDish.repository.CartItemRepository;
+import com.ashish.QuickDish.repository.CartRepository;
 import com.ashish.QuickDish.repository.FoodRepository;
+import com.ashish.QuickDish.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -19,31 +24,51 @@ public class CartItemServiceImpl implements CartItemService {
     private final CartItemRepository cartItemRepository;
     private final FoodRepository foodRepository;
     private final ModelMapper modelMapper;
+    private final CartRepository cartRepository;
+    private final UserRepository userRepository;
 
     private static final Logger log = Logger.getLogger(CartItemServiceImpl.class.getName());
 
-    public CartItemServiceImpl(CartItemRepository cartItemRepository, FoodRepository foodRepository, ModelMapper modelMapper) {
+    public CartItemServiceImpl(CartItemRepository cartItemRepository, FoodRepository foodRepository, ModelMapper modelMapper, CartRepository cartRepository, UserRepository userRepository) {
         this.cartItemRepository = cartItemRepository;
         this.foodRepository = foodRepository;
         this.modelMapper = modelMapper;
+        this.cartRepository = cartRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public CartItemResponseDto addToCart(CartItemResponseDto cartItemResponseDto) {
+    @Transactional
+    public CartItemResponseDto addToCart(CartItemResponseDto cartItemResponseDto, Long userId) {
         log.info("add cartitem for food");
 
-        FoodItem foodItem = foodRepository.findById(cartItemResponseDto.getFoodItemId())
-                .orElseThrow(() -> new ResourceNotFoundException("food not found with food id"));
+    FoodItem foodItem = foodRepository.findById(cartItemResponseDto.getFoodItemId())
+                .orElseThrow(() -> new ResourceNotFoundException("Food not found with food id"));
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
+
+        Cart cart = cartRepository.findByUserId(userId)
+                .orElseGet(() -> {
+                    Cart newCart = new Cart();
+                    newCart.setUser(user);
+                    return cartRepository.save(newCart);
+                });
 
         CartItem cartItem = new CartItem();
         cartItem.setFoodItem(foodItem);
         cartItem.setQuantity(cartItemResponseDto.getQuantity());
-        cartItem.setUserId(cartItemResponseDto.getUserId());
-
+        cartItem.setCart(cart);
+        cartItem.setUserId(userId);
+        cartItem.setUnitPrice(foodItem.getPrice());
+        cartItem.setTotalPrice(foodItem.getPrice() * cartItem.getQuantity());
         CartItem savedCartItem = cartItemRepository.save(cartItem);
+
+
         CartItemResponseDto responseDto = new CartItemResponseDto();
         responseDto.setId(savedCartItem.getId());
         responseDto.setFoodItemId(foodItem.getId());
+        responseDto.setCartId(cart.getId());
         responseDto.setFoodName(foodItem.getName());
         responseDto.setUnitPrice(foodItem.getPrice());
         responseDto.setQuantity(savedCartItem.getQuantity());
@@ -51,15 +76,16 @@ public class CartItemServiceImpl implements CartItemService {
         return responseDto;
     }
 
+
     @Override
     public CartItemResponseDto updateCartItemQuantity(Long cartItemId, int quantity) {
         log.info("update the cartitem quantity");
         CartItem cartitem = cartItemRepository.findById(cartItemId).orElseThrow(
                 ()->new ResourceNotFoundException("cartitem are not found with cartitem id"));
-//        modelMapper.map(CartItemResponseDto.class, cartitem);
         cartitem.setQuantity(quantity);
         double unitPrice = cartitem.getFoodItem().getPrice();
         cartitem.setUnitPrice(unitPrice);
+        cartitem.setUserId(cartitem.getUserId());
         cartitem.setTotalPrice(unitPrice * quantity);
         CartItem saved = cartItemRepository.save(cartitem);
         return modelMapper.map(saved, CartItemResponseDto.class);
@@ -68,7 +94,7 @@ public class CartItemServiceImpl implements CartItemService {
     @Override
     public List<CartItemResponseDto> getAllCartItemsByUser(Long userId) {
         log.info("get all cartitems by user");
-        List<CartItem> cartItems  = cartItemRepository.findByUserId(userId);
+        List<CartItem> cartItems = (List<CartItem>) cartItemRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("user id not found "));
         return cartItems.stream()
                 .map(ele ->modelMapper.map(ele,CartItemResponseDto.class))
                 .collect(Collectors.toList());

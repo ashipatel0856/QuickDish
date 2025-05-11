@@ -1,9 +1,12 @@
 package com.ashish.QuickDish.Entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class OrderItem {
     @Id

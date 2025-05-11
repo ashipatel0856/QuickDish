@@ -1,23 +1,28 @@
 package com.ashish.QuickDish.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import org.antlr.v4.runtime.CodePointBuffer;
 
 @Entity
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private int quantity;
-    @Column(nullable = false)
     private double unitPrice;
-    @Column(nullable = false)
+
+
     private double totalPrice;;
 
     @ManyToOne
+    @JsonIgnore
     private Cart cart;
 
     @ManyToOne
@@ -81,4 +86,6 @@ public class CartItem {
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
+
+
 }
