@@ -17,7 +17,7 @@ public class CartItemResponseDto {
     private int quantity;
     private double totalPrice;
     private double unitPrice;
-
+    private Long userId;
     public Long getId() {
         return id;
     }
@@ -66,5 +66,13 @@ public class CartItemResponseDto {
         this.unitPrice = unitPrice;
     }
 
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
 }
