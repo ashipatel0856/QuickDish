@@ -1,5 +1,6 @@
 package com.ashish.QuickDish.dto;
 
+import com.ashish.QuickDish.Entity.Address;
 import lombok.*;
 
 @Getter
@@ -16,7 +17,15 @@ public class RestaurantDto {
     private String location;
     private String[] image;
     private boolean approved;
+    private Address address;
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
     public boolean isApproved() {
         return approved;

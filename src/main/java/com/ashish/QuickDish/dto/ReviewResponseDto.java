@@ -1,40 +1,25 @@
-package com.ashish.QuickDish.Entity;
+package com.ashish.QuickDish.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Review {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class ReviewResponseDto {
 
+    private Long id;
     private String name;
     private String comments;
     private int rating;
     private LocalDateTime date;
-
-    @ManyToOne
-    @JsonIgnore
-    private User user;
-
-    @ManyToOne
-    private Restaurant restaurant;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    private Long userId;
+    private Long restaurantId;
 
     public Long getId() {
         return id;
@@ -42,6 +27,14 @@ public class Review {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getComments() {
@@ -68,19 +61,19 @@ public class Review {
         this.date = date;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
+    public Long getRestaurantId() {
+        return restaurantId;
     }
 
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
+    public void setRestaurantId(Long restaurantId) {
+        this.restaurantId = restaurantId;
     }
 }
