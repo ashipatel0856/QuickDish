@@ -6,6 +6,7 @@ import com.ashish.QuickDish.Entity.FoodItem;
 import com.ashish.QuickDish.Entity.User;
 import com.ashish.QuickDish.dto.CartItemResponseDto;
 import com.ashish.QuickDish.exceptions.ResourceNotFoundException;
+import com.ashish.QuickDish.exceptions.UnAuthorisedException;
 import com.ashish.QuickDish.repository.CartItemRepository;
 import com.ashish.QuickDish.repository.CartRepository;
 import com.ashish.QuickDish.repository.FoodRepository;
@@ -18,6 +19,8 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import static com.ashish.QuickDish.utils.AppUtils.getCurrentUser;
+
 @Service
 public class CartItemServiceImpl implements CartItemService {
 
@@ -26,15 +29,17 @@ public class CartItemServiceImpl implements CartItemService {
     private final ModelMapper modelMapper;
     private final CartRepository cartRepository;
     private final UserRepository userRepository;
+    private final  UserService userService;
 
     private static final Logger log = Logger.getLogger(CartItemServiceImpl.class.getName());
 
-    public CartItemServiceImpl(CartItemRepository cartItemRepository, FoodRepository foodRepository, ModelMapper modelMapper, CartRepository cartRepository, UserRepository userRepository) {
+    public CartItemServiceImpl(CartItemRepository cartItemRepository, FoodRepository foodRepository, ModelMapper modelMapper, CartRepository cartRepository, UserRepository userRepository, UserService userService) {
         this.cartItemRepository = cartItemRepository;
         this.foodRepository = foodRepository;
         this.modelMapper = modelMapper;
         this.cartRepository = cartRepository;
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -44,6 +49,7 @@ public class CartItemServiceImpl implements CartItemService {
 
     FoodItem foodItem = foodRepository.findById(cartItemResponseDto.getFoodItemId())
                 .orElseThrow(() -> new ResourceNotFoundException("Food not found with food id"));
+
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
@@ -82,6 +88,12 @@ public class CartItemServiceImpl implements CartItemService {
         log.info("update the cartitem quantity");
         CartItem cartitem = cartItemRepository.findById(cartItemId).orElseThrow(
                 ()->new ResourceNotFoundException("cartitem are not found with cartitem id"));
+
+        User user = getCurrentUser();
+
+//        if (cartitem.getOwner() == null || !cartitem.getOwner().getId().equals(user.getId())) {
+//            throw new UnAuthorisedException("YOU ARE NOT UNAUTHORIZED PERSON");
+//        }
         cartitem.setQuantity(quantity);
         double unitPrice = cartitem.getFoodItem().getPrice();
         cartitem.setUnitPrice(unitPrice);

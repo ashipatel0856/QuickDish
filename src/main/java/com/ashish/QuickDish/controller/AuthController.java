@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,17 +33,19 @@ public class AuthController {
     public ResponseEntity<UserDto> signUp(@RequestBody SignupDto signUpRequestDto) {
         return new ResponseEntity<>(authService.signUp(signUpRequestDto), HttpStatus.CREATED);
     }
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginDto loginDto, HttpServletResponse httpServletResponse) {
+    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginDto loginDto, HttpServletResponse response) {
         String[] tokens = authService.login(loginDto);
-
-        // jwt token pass in cookie;
         Cookie cookie = new Cookie("refreshToken", tokens[1]);
         cookie.setHttpOnly(true);
+        response.addCookie(cookie);
 
-        httpServletResponse.addCookie(cookie);
-        return ResponseEntity.ok(new LoginResponseDto(tokens[0]));
+        LoginResponseDto response1 = new LoginResponseDto();
+        response1.setAccessToken(tokens[0]);
+        return ResponseEntity.ok(response1);
+
     }
+
 
 
     @PostMapping("/refresh")

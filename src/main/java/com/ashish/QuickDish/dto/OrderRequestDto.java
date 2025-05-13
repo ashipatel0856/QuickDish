@@ -14,31 +14,40 @@ import java.util.List;
 @NoArgsConstructor
 public class OrderRequestDto {
 
-    private Long restaurantId;
-    private List<Long> foodItemsIds;
-    private Address address;
+ private Long restaurantId;
+ private double totalPrice;
+ private String deliveryAddress;
+ private String notes;
 
-    public Long getRestaurantId() {
-        return restaurantId;
-    }
+ public Long getRestaurantId() {
+  return restaurantId;
+ }
 
-    public void setRestaurantId(Long restaurantId) {
-        this.restaurantId = restaurantId;
-    }
+ public void setRestaurantId(Long restaurantId) {
+  this.restaurantId = restaurantId;
+ }
 
-    public List<Long> getFoodItemsIds() {
-        return foodItemsIds;
-    }
+ public double getTotalPrice() {
+  return totalPrice;
+ }
 
-    public void setFoodItemsIds(List<Long> foodItemsIds) {
-        this.foodItemsIds = foodItemsIds;
-    }
+ public void setTotalPrice(double totalPrice) {
+  this.totalPrice = totalPrice;
+ }
 
-    public Address getAddress() {
-        return address;
-    }
+ public String getDeliveryAddress() {
+  return deliveryAddress;
+ }
 
-    public void setAddress(Address address) {
-        this.address = address;
-    }
+ public void setDeliveryAddress(String deliveryAddress) {
+  this.deliveryAddress = deliveryAddress;
+ }
+
+ public String getNotes() {
+  return notes;
+ }
+
+ public void setNotes(String notes) {
+  this.notes = notes;
+ }
 }

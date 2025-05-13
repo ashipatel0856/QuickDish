@@ -1,9 +1,7 @@
 package com.ashish.QuickDish.Entity.enums;
 
-public enum OrderStatus {
-    PLACED,
+public enum PaymentStatus {
+    PENDING,
     CONFIRMED,
     CANCELLED,
-    DELIVERED,
-    OUT_OF_DELIVERY
 }
