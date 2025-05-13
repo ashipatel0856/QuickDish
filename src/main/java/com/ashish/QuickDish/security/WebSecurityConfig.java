@@ -30,9 +30,9 @@ public class WebSecurityConfig {
         httpSecurity
                 .csrf(csrfConfig -> csrfConfig.disable())
                 .sessionManagement(sessionConfig -> sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore((Filter) jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/admin/**").hasRole("HOTEL_MANAGER")
+                        .requestMatchers("/admin/**").hasRole("RESTAURANT_OWNER")
                         .requestMatchers("/orders/**").authenticated()
                         .requestMatchers("/users/**").authenticated()
 

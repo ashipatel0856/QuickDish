@@ -34,9 +34,22 @@ public class Restaurant {
     @JsonIgnore
     private List<Order> orders;
 
+
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Review> reviews;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
+    private User Owner;
+
+    public User getOwner() {
+        return Owner;
+    }
+
+    public void setOwner(User owner) {
+        Owner = owner;
+    }
 
     public boolean isApproved() {
         return approved;

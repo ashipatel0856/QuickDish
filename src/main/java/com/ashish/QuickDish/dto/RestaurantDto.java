@@ -1,6 +1,7 @@
 package com.ashish.QuickDish.dto;
 
 import com.ashish.QuickDish.Entity.Address;
+import com.ashish.QuickDish.Entity.User;
 import lombok.*;
 
 @Getter
@@ -18,6 +19,15 @@ public class RestaurantDto {
     private String[] image;
     private boolean approved;
     private Address address;
+   private UserDto Owner;
+
+    public UserDto getOwner() {
+        return Owner;
+    }
+
+    public void setOwner(UserDto owner) {
+        Owner = owner;
+    }
 
     public Address getAddress() {
         return address;

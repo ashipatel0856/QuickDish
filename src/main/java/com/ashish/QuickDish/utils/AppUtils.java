@@ -5,6 +5,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 public class AppUtils {
     public static User getCurrentUser() {
-        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof User) {
+            return (User) principal;
+        }
+
+
+        throw new RuntimeException("User not found in security context");
     }
 }

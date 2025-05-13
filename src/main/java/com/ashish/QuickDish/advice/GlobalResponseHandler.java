@@ -1,5 +1,7 @@
 package com.ashish.QuickDish.advice;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -12,6 +14,8 @@ import java.util.List;
 
 @RestControllerAdvice
 public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
+    private static final Logger logger = LoggerFactory.getLogger(GlobalResponseHandler.class);
+
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
         return true;
@@ -21,9 +25,9 @@ public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
         List<String> allowedRoutes = List.of("/v3/api-docs","/actuator");
 
-        boolean isAllowed =allowedRoutes
+        boolean isAllowed = allowedRoutes
                 .stream()
-                .anyMatch(route -> route.equals(request.getURI().getPath().contains(route)));
+                .anyMatch(route -> request.getURI().getPath().contains(route));
 
         if(body instanceof ApiResponse<?> || isAllowed) {
             return body;

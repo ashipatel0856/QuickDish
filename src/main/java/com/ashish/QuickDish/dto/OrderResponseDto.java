@@ -1,5 +1,6 @@
 package com.ashish.QuickDish.dto;
 
+import com.ashish.QuickDish.Entity.enums.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,27 +14,20 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class OrderResponseDto {
 
-    private Long orderId;
-    private LocalDateTime orderDate;
+    private Long id;
     private String restaurantName;
-    private String status;
+    private LocalDateTime orderDate;
+    private OrderStatus status;
     private double totalPrice;
-    private Long customerId;
+    private boolean isPaid;
+    private String deliveryAddress;
 
-    public Long getOrderId() {
-        return orderId;
+    public Long getId() {
+        return id;
     }
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    public LocalDateTime getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(LocalDateTime orderDate) {
-        this.orderDate = orderDate;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getRestaurantName() {
@@ -44,11 +38,19 @@ public class OrderResponseDto {
         this.restaurantName = restaurantName;
     }
 
-    public String getStatus() {
+    public LocalDateTime getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(LocalDateTime orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public OrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
@@ -60,11 +62,19 @@ public class OrderResponseDto {
         this.totalPrice = totalPrice;
     }
 
-    public Long getCustomerId() {
-        return customerId;
+    public boolean isPaid() {
+        return isPaid;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setPaid(boolean paid) {
+        isPaid = paid;
+    }
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(String deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
     }
 }

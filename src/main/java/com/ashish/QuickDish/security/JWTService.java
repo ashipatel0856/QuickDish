@@ -41,6 +41,9 @@ public class JWTService {
     }
 
     public Long getUserIdFromToken(String token) {
+        if (token == null || token.trim().isEmpty()) {
+            throw new IllegalArgumentException("Token is missing or empty");
+        }
         Claims claims = Jwts.parser()
                 .verifyWith(getSecretKey())
                 .build()
