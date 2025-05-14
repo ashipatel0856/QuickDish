@@ -1,9 +1,6 @@
 package com.ashish.QuickDish.controller;
 
-import com.ashish.QuickDish.dto.LoginDto;
-import com.ashish.QuickDish.dto.LoginResponseDto;
-import com.ashish.QuickDish.dto.SignupDto;
-import com.ashish.QuickDish.dto.UserDto;
+import com.ashish.QuickDish.dto.*;
 import com.ashish.QuickDish.security.AuthService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,8 +27,11 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<UserDto> signUp(@RequestBody SignupDto signUpRequestDto) {
-        return new ResponseEntity<>(authService.signUp(signUpRequestDto), HttpStatus.CREATED);
+    public ResponseEntity<String> signUp(@RequestBody SignupDto signUpRequestDto) {
+//        return new ResponseEntity<>(authService.signUp(signUpRequestDto), HttpStatus.CREATED);
+         authService.signUp(signUpRequestDto);
+         return ResponseEntity.ok("otp sent to your email");
+
     }
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<LoginResponseDto> login(@RequestBody LoginDto loginDto, HttpServletResponse response) {
@@ -59,4 +59,11 @@ public class AuthController {
         String accessToken = authService.refreshToken(refreshToken);
         return ResponseEntity.ok(new LoginResponseDto(accessToken));
     }
+
+    @PostMapping("/otp")
+    public ResponseEntity<String> VerifyOtp(@RequestBody OtpRequestDto otpRequestDto) {
+        String verifiedDto = authService.VerifyOtp(otpRequestDto);
+        return ResponseEntity.ok(verifiedDto);
+    }
+
 }

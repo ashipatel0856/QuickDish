@@ -55,7 +55,7 @@ public class OrderServiceImpl implements OrderService{
         Restaurant restaurant = restaurantRepository.findById(orderRequestDto.getRestaurantId())
                 .orElseThrow(() -> new ResourceNotFoundException("Restaurant not found"));
 
-        // Step 1: Create Order
+        //  creating orders
         Order order = new Order();
         order.setOrderDate(LocalDateTime.now());
         order.setRestaurant(restaurant);
@@ -66,10 +66,10 @@ public class OrderServiceImpl implements OrderService{
         order.setNotes(orderRequestDto.getNotes());
         order.setPaid(false);
 
-        // Step 2: Save order to get generated ID
+
         Order savedOrder = orderRepository.save(order);
 
-        // Step 3: Create and attach order items
+        // create orders attactment to order-items
         List<OrderItemRequestDto> itemDtos = orderRequestDto.getOrderItems();
         if (itemDtos != null && !itemDtos.isEmpty()) {
             List<OrderItem> orderItems = new ArrayList<>();
@@ -86,11 +86,7 @@ public class OrderServiceImpl implements OrderService{
 
                 orderItems.add(orderItem);
             }
-
-            // 💡 link items to order (important for cascade to work)
             savedOrder.setOrderItems(orderItems);
-
-            // 💡 save again to persist orderItems
             orderRepository.save(savedOrder);
         }
 
