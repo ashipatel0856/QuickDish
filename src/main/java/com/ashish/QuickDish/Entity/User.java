@@ -59,6 +59,7 @@ public class User implements UserDetails {
 
     private Boolean isVerified = false;
 
+
     public Long getId() {
         return id;
     }

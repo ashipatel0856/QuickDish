@@ -15,6 +15,7 @@ public class SignupDto {
     private String email;
     private String password;
     private String role;
+//    private String phone;
 
     public String getRole() {
         return role;
@@ -55,4 +56,12 @@ public class SignupDto {
     public String getPassword() {
         return password;
     }
+
+//    public String getPhone() {
+//        return phone;
+//    }
+//
+//    public void setPhone(String phone) {
+//        this.phone = phone;
+//    }
 }

@@ -62,7 +62,7 @@ public class AuthService {
             }
 
 
-            newUser=userRepository.save(newUser);
+            userRepository.save(newUser);
 
             // generate otp and save
 
@@ -76,6 +76,9 @@ public class AuthService {
             // SEND OTP TO YOUR EMAIL
             emailService.sendOtpEmail(signUpRequestDto.getEmail(),otpGenerate);
 //            return modelMapper.map(newUser, UserDto.class);
+
+            // send otp to mobile numbers
+//            smsService.sendOtpToNumbers(signUpRequestDto.getPhone(),otpGenerate);
             return new ApiResponse<>(" signUp succcessful . Otp sent to your email for verifications :");
         }
 
