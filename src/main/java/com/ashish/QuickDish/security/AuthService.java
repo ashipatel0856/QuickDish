@@ -3,6 +3,7 @@ package com.ashish.QuickDish.security;
 import com.ashish.QuickDish.Entity.Otp;
 import com.ashish.QuickDish.Entity.User;
 import com.ashish.QuickDish.Entity.enums.Role;
+import com.ashish.QuickDish.advice.ApiResponse;
 import com.ashish.QuickDish.config.OtpGenerator;
 import com.ashish.QuickDish.dto.*;
 import com.ashish.QuickDish.repository.OtpRepository;
@@ -40,7 +41,7 @@ public class AuthService {
             this.emailService = emailService;
         }
 
-        public String signUp(SignupDto signUpRequestDto) {
+        public ApiResponse<String> signUp(SignupDto signUpRequestDto) {
 
             User user = userRepository.findByEmail(signUpRequestDto.getEmail()).orElse(null);
             if (user != null) {
@@ -75,7 +76,7 @@ public class AuthService {
             // SEND OTP TO YOUR EMAIL
             emailService.sendOtpEmail(signUpRequestDto.getEmail(),otpGenerate);
 //            return modelMapper.map(newUser, UserDto.class);
-            return " signUp succcessful . Otp sent to your email for verifications :";
+            return new ApiResponse<>(" signUp succcessful . Otp sent to your email for verifications :");
         }
 
 
@@ -102,7 +103,7 @@ public class AuthService {
             return jwtService.generateRefreshToken(user);
         }
 
-    public  String VerifyOtp(OtpRequestDto otpRequestDto) {
+    public ApiResponse<String> VerifyOtp(OtpRequestDto otpRequestDto) {
 
             // checking otp record
          Otp otp = otpRepository.findByEmail(otpRequestDto.getEmail())
@@ -128,7 +129,7 @@ public class AuthService {
 
         // DELETE OTP
         otpRepository.delete(otp);
-        return "OTP verified successfully and you can now login in :";
+        return  new ApiResponse<>("OTP verified successfully and you can now login in :");
     }
 
     }

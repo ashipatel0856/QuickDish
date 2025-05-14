@@ -1,11 +1,11 @@
 package com.ashish.QuickDish.controller;
 
+import com.ashish.QuickDish.advice.ApiResponse;
 import com.ashish.QuickDish.dto.*;
 import com.ashish.QuickDish.security.AuthService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,10 +27,9 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signUp(@RequestBody SignupDto signUpRequestDto) {
-//        return new ResponseEntity<>(authService.signUp(signUpRequestDto), HttpStatus.CREATED);
-         authService.signUp(signUpRequestDto);
-         return ResponseEntity.ok("otp sent to your email");
+    public ApiResponse<String> signUp(@RequestBody SignupDto signUpRequestDto) {
+        return new ResponseEntity<>(authService.signUp(signUpRequestDto), HttpStatus.CREATED).getBody();
+
 
     }
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -61,9 +60,16 @@ public class AuthController {
     }
 
     @PostMapping("/otp")
-    public ResponseEntity<String> VerifyOtp(@RequestBody OtpRequestDto otpRequestDto) {
-        String verifiedDto = authService.VerifyOtp(otpRequestDto);
-        return ResponseEntity.ok(verifiedDto);
+    public ResponseEntity<ApiResponse<String>> verifyOtp(@RequestBody OtpRequestDto otpRequestDto) {
+        return ResponseEntity.ok(authService.VerifyOtp(otpRequestDto));
     }
+
+
+
+
+
+
+
+
 
 }

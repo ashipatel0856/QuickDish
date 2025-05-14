@@ -51,4 +51,5 @@ public class ApiResponse<T> {
     public void setError(ApiError error) {
         this.error = error;
     }
+
 }
