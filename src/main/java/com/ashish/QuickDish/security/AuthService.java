@@ -15,7 +15,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.security.PublicKey;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -77,8 +76,6 @@ public class AuthService {
             emailService.sendOtpEmail(signUpRequestDto.getEmail(),otpGenerate);
 //            return modelMapper.map(newUser, UserDto.class);
 
-            // send otp to mobile numbers
-//            smsService.sendOtpToNumbers(signUpRequestDto.getPhone(),otpGenerate);
             return new ApiResponse<>(" signUp succcessful . Otp sent to your email for verifications :");
         }
 
