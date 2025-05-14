@@ -33,7 +33,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void updateProfile(ProfileUpdateRequestDto profileUpdateRequestDto) {
         User user = getCurrentUser();
         if(profileUpdateRequestDto.getPhone()!=null) user.setPhone(profileUpdateRequestDto.getPhone());
-        if(profileUpdateRequestDto.getVerified()!=null) user.setVerified(profileUpdateRequestDto.getVerified());
         if(profileUpdateRequestDto.getAddress()!=null) user.setAddress(profileUpdateRequestDto.getAddress());
 
         if (profileUpdateRequestDto.getRole() != null) {

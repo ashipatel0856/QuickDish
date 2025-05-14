@@ -83,7 +83,6 @@ public class ReviewServiceImpl implements ReviewService {
         review.setDate(LocalDateTime.now());
         Review savedReview = reviewRepository.save(review);
         return modelMapper.map(savedReview, ReviewResponseDto.class);
-
     }
 
     @Override

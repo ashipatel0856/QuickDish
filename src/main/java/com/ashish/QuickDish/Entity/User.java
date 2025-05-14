@@ -35,7 +35,6 @@ public class User implements UserDetails {
 
     private String password;
 
-    private Boolean isVerified;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
@@ -96,13 +95,7 @@ public class User implements UserDetails {
         this.name = name;
     }
 
-    public Boolean getVerified() {
-        return isVerified;
-    }
 
-    public void setVerified(Boolean verified) {
-        isVerified = verified;
-    }
 
     public String getPhone() {
         return phone;
