@@ -57,6 +57,8 @@ public class User implements UserDetails {
     @JsonIgnore
     private List<Review> reviews;
 
+    private Boolean isVerified = false;
+
     public Long getId() {
         return id;
     }
@@ -145,6 +147,14 @@ public class User implements UserDetails {
 
     public void setRole(Set<Role> role) {
         this.role = role;
+    }
+
+    public Boolean getVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(Boolean verified) {
+        isVerified = verified;
     }
 
     @Override
