@@ -49,7 +49,6 @@ public class WebSecurityConfig {
     }
 
 
-
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
         return (request, response, accessDeniedException) -> {

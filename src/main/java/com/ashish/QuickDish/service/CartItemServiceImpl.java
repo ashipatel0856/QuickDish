@@ -89,9 +89,8 @@ public class CartItemServiceImpl implements CartItemService {
         CartItem cartitem = cartItemRepository.findById(cartItemId).orElseThrow(
                 ()->new ResourceNotFoundException("cartitem are not found with cartitem id"));
 
-        User user = getCurrentUser();
-
-//        if (cartitem.getOwner() == null || !cartitem.getOwner().getId().equals(user.getId())) {
+//        User user = getCurrentUser();
+//      if (cartitem.getOwner() == null || !cartitem.getOwner().getId().equals(user.getId())) {
 //            throw new UnAuthorisedException("YOU ARE NOT UNAUTHORIZED PERSON");
 //        }
         cartitem.setQuantity(quantity);

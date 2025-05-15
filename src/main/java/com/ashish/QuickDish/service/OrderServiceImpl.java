@@ -164,7 +164,6 @@ public class OrderServiceImpl implements OrderService{
             order.getOrderItems().add(newOderItem);
         }
         // again recalculate total price
-
         double totalPrice = order.getOrderItems()
                 .stream()
                 .mapToDouble(amount -> amount.getFoodItem().getPrice() * amount.getQuantity())
