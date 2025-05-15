@@ -1,5 +1,4 @@
 package com.ashish.QuickDish.controller;
-
 import com.ashish.QuickDish.advice.ApiResponse;
 import com.ashish.QuickDish.dto.*;
 import com.ashish.QuickDish.security.AuthService;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.Arrays;
 
 @RestController

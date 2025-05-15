@@ -37,14 +37,14 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 
         try {
             final String requestTokenHeader = request.getHeader("Authorization");
-            System.out.println("Authorization Header: " + requestTokenHeader); // ✅ Debug log
+            System.out.println("Authorization Header: " + requestTokenHeader);
 
             if (requestTokenHeader == null || !requestTokenHeader.startsWith("Bearer ")) {
                 filterChain.doFilter(request, response);
                 return;
             }
 
-            String token = requestTokenHeader.substring(7).trim(); // ✅ Safer way
+            String token = requestTokenHeader.substring(7).trim();
 
             if (token.isEmpty()) {
                 throw new IllegalArgumentException("Token is missing or empty");

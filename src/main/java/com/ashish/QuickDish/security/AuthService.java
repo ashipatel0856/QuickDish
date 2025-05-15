@@ -44,12 +44,12 @@ public class AuthService {
 
             User user = userRepository.findByEmail(signUpRequestDto.getEmail()).orElse(null);
             if (user != null) {
-                throw new RuntimeException("User is already registered with same email");
+                throw new RuntimeException("User is already registered with the same email");
             }
 
             User newUser = modelMapper.map(signUpRequestDto, User.class);
             newUser.setPassword(passwordEncoder.encode(signUpRequestDto.getPassword()));
-            newUser.setVerified(false);  // not verified
+            newUser.setVerified(false);  // not verified set data base false before verify otp
 
 
             try {
@@ -57,14 +57,12 @@ public class AuthService {
                 newUser.setRole(Set.of(role));
 
             } catch (IllegalArgumentException e) {
-                throw new RuntimeException("Invalid role based: " + signUpRequestDto.getRole());
+                throw new RuntimeException("Invalid role based : " + signUpRequestDto.getRole());
             }
-
 
             userRepository.save(newUser);
 
             // generate otp and save
-
             String otpGenerate = OtpGenerator.generateOtp();
             Otp otp = new Otp();
             otp.setEmail(signUpRequestDto.getEmail());
@@ -76,7 +74,7 @@ public class AuthService {
             emailService.sendOtpEmail(signUpRequestDto.getEmail(),otpGenerate);
 //            return modelMapper.map(newUser, UserDto.class);
 
-            return new ApiResponse<>(" signUp succcessful . Otp sent to your email for verifications :");
+            return new ApiResponse<>("Otp sent to your email for verifications QuickDish :");
         }
 
 
@@ -107,7 +105,7 @@ public class AuthService {
 
             // checking otp record
          Otp otp = otpRepository.findByEmail(otpRequestDto.getEmail())
-                .orElseThrow(() -> new RuntimeException("OTP not found for that email"));
+                .orElseThrow(() -> new RuntimeException("OTP are not found for that email"));
 
          // checking opt expired or not
         if(otp.getOtpExpiryTime().isBefore(LocalDateTime.now())) {
