@@ -1,5 +1,6 @@
 package com.ashish.QuickDish.service;
 
+import com.ashish.QuickDish.Entity.Order;
 import com.ashish.QuickDish.Entity.enums.OrderStatus;
 import com.ashish.QuickDish.dto.AddOrderDto;
 import com.ashish.QuickDish.dto.OrderRequestDto;
@@ -13,7 +14,7 @@ public interface OrderService {
         OrderResponseDto getMyOrdersById(Long id);
         OrderResponseDto updateMyOrdersStatusById(Long orderId, OrderStatus status);
         OrderResponseDto addMyOrders(AddOrderDto addOrderDto);
-
        void markOrderAsPaid(String sessionId);
+        Order getOrderById(Long orderId);
 
 }

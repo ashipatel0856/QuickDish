@@ -25,18 +25,16 @@ public class PaymentController {
     }
 
     @PostMapping("/init/{orderId}")
-
     public ResponseEntity<?> initPayments(@PathVariable Long orderId) {
-        Order order = OrderService.getOrderById(orderId);
-        if (order == null || order.getIsPaid()) {
+        Order order = orderService.getOrderById(orderId);
+        if (order == null || order.getPaid()) {
             return ResponseEntity.badRequest().body("Invalid order or already paid order");
         }
 
-//   for fronted success pages
         String successUrl = "http://localhost:3000/success";
         String failureUrl = "http://localhost:3000/failure";
 
-        String sessionUrl = checkoutService.getCheckoutServiceSession(order,successUrl,failureUrl);
+        String sessionUrl = checkoutService.getCheckoutServiceSession(order, successUrl, failureUrl);
         return ResponseEntity.ok(Map.of("sessionUrl", sessionUrl));
     }
 }

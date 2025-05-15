@@ -13,7 +13,6 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "orders")
 public class Order {
     @Id
@@ -43,13 +42,14 @@ public class Order {
 
     private String notes;
 
-    private Boolean isPaid = false;
+    private boolean isPaid = false;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     private String paymentSessionId;
 
+    @Column(name = "payment_date")
     private LocalDateTime paymentDate;
 
     public Order(LocalDateTime paymentDate) {
@@ -152,15 +152,21 @@ public class Order {
         return paymentDate;
     }
 
-    public Boolean getPaid() {
+    public boolean getPaid() {
         return isPaid;
     }
 
-    public void setPaid(Boolean paid) {
-        isPaid = paid;
-    }
 
     public void setPaymentDate(LocalDateTime paymentDate) {
         this.paymentDate = paymentDate;
     }
+
+
+    public Order() {
+    }
+
+    public void setPaid(boolean isPaid) {
+        this.isPaid = isPaid;
+    }
+
 }

@@ -13,6 +13,7 @@ import com.ashish.QuickDish.repository.OrderItemRepository;
 import com.ashish.QuickDish.repository.OrderRepository;
 import com.ashish.QuickDish.repository.RestaurantRepository;
 import jakarta.transaction.Transactional;
+import org.aspectj.weaver.ast.Or;
 import org.modelmapper.ModelMapper;
 
 import org.springframework.stereotype.Service;
@@ -179,12 +180,16 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public void markOrderAsPaid(String sessionId) {
-        Order order = orderRepository.findByPaymentSessionId(sessionId);
-        if(order != null) {
-            order.setPaid(true);
-            order.setIsPaid(true);
-            order.setPaymentDate(LocalDateTime.now());
-            orderRepository.save(order);
-        }
+        Order order = orderRepository.findByPaymentSessionId(sessionId).orElseThrow(
+                ()-> new ResourceNotFoundException("orders are not found"));
+        order.setPaid(true);
+        order.setPaymentDate(LocalDateTime.now());
+        orderRepository.save(order);
     }
+    @Override
+    public Order getOrderById(Long orderId) {
+        return orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found with id: " + orderId));
+    }
+
 }
