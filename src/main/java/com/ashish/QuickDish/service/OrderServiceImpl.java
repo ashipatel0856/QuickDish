@@ -19,7 +19,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -70,6 +72,7 @@ public class OrderServiceImpl implements OrderService{
         Order savedOrder = orderRepository.save(order);
 
         // create orders attactment to order-items
+
         List<OrderItemRequestDto> itemDtos = orderRequestDto.getOrderItems();
         if (itemDtos != null && !itemDtos.isEmpty()) {
             List<OrderItem> orderItems = new ArrayList<>();
@@ -172,5 +175,16 @@ public class OrderServiceImpl implements OrderService{
 
         Order updatedOrder = orderRepository.save(order);
         return modelMapper.map(updatedOrder,OrderResponseDto.class);
+    }
+
+    @Override
+    public void markOrderAsPaid(String sessionId) {
+        Order order = orderRepository.findByPaymentSessionId(sessionId);
+        if(order != null) {
+            order.setPaid(true);
+            order.setIsPaid(true);
+            order.setPaymentDate(LocalDateTime.now());
+            orderRepository.save(order);
+        }
     }
 }

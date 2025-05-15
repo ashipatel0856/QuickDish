@@ -48,6 +48,14 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems = new ArrayList<>();
 
+    private String paymentSessionId;
+
+    private LocalDateTime paymentDate;
+
+    public Order(LocalDateTime paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
     public List<OrderItem> getOrderItems() {
         return orderItems;
     }
@@ -105,13 +113,6 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public Payment getPayment() {
-        return payment;
-    }
-
-    public void setPayment(Payment payment) {
-        this.payment = payment;
-    }
 
     public String getDeliveryAddress() {
         return deliveryAddress;
@@ -129,11 +130,37 @@ public class Order {
         this.notes = notes;
     }
 
+
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
+
+    public String getPaymentSessionId() {
+        return paymentSessionId;
+    }
+
+    public void setPaymentSessionId(String paymentSessionId) {
+        this.paymentSessionId = paymentSessionId;
+    }
+
+    public LocalDateTime getPaymentDate() {
+        return paymentDate;
+    }
+
     public Boolean getPaid() {
         return isPaid;
     }
 
     public void setPaid(Boolean paid) {
         isPaid = paid;
+    }
+
+    public void setPaymentDate(LocalDateTime paymentDate) {
+        this.paymentDate = paymentDate;
     }
 }

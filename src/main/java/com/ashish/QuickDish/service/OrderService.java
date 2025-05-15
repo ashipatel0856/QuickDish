@@ -14,4 +14,6 @@ public interface OrderService {
         OrderResponseDto updateMyOrdersStatusById(Long orderId, OrderStatus status);
         OrderResponseDto addMyOrders(AddOrderDto addOrderDto);
 
+       void markOrderAsPaid(String sessionId);
+
 }
