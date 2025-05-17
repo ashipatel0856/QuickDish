@@ -127,6 +127,13 @@
 			<artifactId>stripe-java</artifactId>
 			<version>28.2.0</version>
 		</dependency>
+
+		<!-- GSON for parsing Google API response -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.10</version>
+		</dependency>
 	</dependencies>
 
 	<build>

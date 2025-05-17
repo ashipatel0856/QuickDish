@@ -18,12 +18,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-
-import static com.ashish.QuickDish.utils.AppUtils.getCurrentUser;
-
 @Service
 public class CartItemServiceImpl implements CartItemService {
-
     private final CartItemRepository cartItemRepository;
     private final FoodRepository foodRepository;
     private final ModelMapper modelMapper;
@@ -33,7 +29,12 @@ public class CartItemServiceImpl implements CartItemService {
 
     private static final Logger log = Logger.getLogger(CartItemServiceImpl.class.getName());
 
-    public CartItemServiceImpl(CartItemRepository cartItemRepository, FoodRepository foodRepository, ModelMapper modelMapper, CartRepository cartRepository, UserRepository userRepository, UserService userService) {
+    public CartItemServiceImpl(CartItemRepository cartItemRepository,
+                               FoodRepository foodRepository,
+                               ModelMapper modelMapper,
+                               CartRepository cartRepository,
+                               UserRepository userRepository,
+                               UserService userService) {
         this.cartItemRepository = cartItemRepository;
         this.foodRepository = foodRepository;
         this.modelMapper = modelMapper;

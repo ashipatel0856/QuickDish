@@ -7,12 +7,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ReviewService {
-
     ReviewResponseDto addToView(ReviewRequestDto reviewRequestDto);
     ReviewResponseDto getReviewById(Long id);
     List<ReviewResponseDto> getAllReviews();
     ReviewResponseDto updateReviewById(Long id,ReviewRequestDto reviewRequestDto);
     void deleteReviewById(Long id);
-
 
 }

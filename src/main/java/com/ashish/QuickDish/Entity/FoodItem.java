@@ -34,6 +34,7 @@ public class FoodItem {
     @OneToMany(mappedBy = "foodItem")
     private List<OrderItem> orderItems;
 
+
     public Long getId() {
         return id;
     }

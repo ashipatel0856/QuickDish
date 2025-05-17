@@ -18,7 +18,9 @@ public class EmailService {
         message.setText("OTP verification sent to your email :"+otp);
         mailSender.send(message); // yha se message send hota h
 
+
 //        System.out.println("OTP verification email has been sent to "+toEmail); // ye console me message display krta h
+
 
     }
 }

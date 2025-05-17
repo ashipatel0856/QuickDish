@@ -2,7 +2,6 @@ package com.ashish.QuickDish.controller;
 
 import com.ashish.QuickDish.dto.ReviewRequestDto;
 import com.ashish.QuickDish.dto.ReviewResponseDto;
-import com.ashish.QuickDish.repository.ReviewRepository;
 import com.ashish.QuickDish.service.ReviewService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
