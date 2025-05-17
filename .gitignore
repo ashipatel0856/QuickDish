@@ -1,16 +1,14 @@
-# Ignore the .env file (important for secret keys)
+# Environment
 .env
 
-# Java build output
+# Java build
 HELP.md
 target/
-!**/src/main/**/target/
-!**/src/test/**/target/
 
 # Maven wrapper
 !.mvn/wrapper/maven-wrapper.jar
 
-# STS (Spring Tool Suite)
+# IDEs
 .apt_generated
 .classpath
 .factorypath
@@ -18,8 +16,6 @@ target/
 .settings
 .springBeans
 .sts4-cache
-
-# IntelliJ IDEA
 .idea
 *.iws
 *.iml
@@ -31,12 +27,16 @@ target/
 /dist/
 /nbdist/
 /.nb-gradle/
+
+# Build
 build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
 # VS Code
 .vscode/
 
-# Ignore sensitive config files
-src/main/resources/application.properties
+# Sensitive config (choose one)
+# Recommended:
+# src/main/resources/application-secret.properties
+
+# OR (if you must ignore the full file)
+# src/main/resources/application.properties
