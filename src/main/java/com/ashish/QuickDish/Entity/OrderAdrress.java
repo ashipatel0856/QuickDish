@@ -20,8 +20,7 @@ public class OrderAdrress {
     private User user;
 
     @ManyToOne
-    private RestaurantAddress restaurant;
-
+    private Restaurant restaurant;
     @ManyToOne
     private UserAddress userAddress;
 
@@ -47,11 +46,11 @@ public class OrderAdrress {
         this.user = user;
     }
 
-    public RestaurantAddress getRestaurant() {
+    public Restaurant getRestaurant() {
         return restaurant;
     }
 
-    public void setRestaurant(RestaurantAddress restaurant) {
+    public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
     }
 

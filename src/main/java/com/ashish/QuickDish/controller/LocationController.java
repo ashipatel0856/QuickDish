@@ -19,10 +19,10 @@ public class LocationController {
     }
     @PostMapping("/place")
     public ResponseEntity<OrderAdrress> placeOrder(@RequestParam Long userId,
-                                                   @RequestParam Long restaurentId,
+                                                   @RequestParam Long restaurantId,
                                                    @RequestParam Long addressId){
 
-        OrderAdrress orderAdrress = orderLocationsService.placeOrder(userId, restaurentId, addressId);
+        OrderAdrress orderAdrress = orderLocationsService.placeOrder(userId, restaurantId, addressId);
         return ResponseEntity.ok(orderAdrress);
     }
 }

@@ -20,6 +20,8 @@ public class RestaurantDto {
     private boolean approved;
     private Address address;
    private UserDto Owner;
+   private Double longitude;
+   private Double latitude;
 
     public UserDto getOwner() {
         return Owner;
@@ -77,7 +79,21 @@ public class RestaurantDto {
         this.contact = contact;
     }
 
+    public Double getLongitude() {
+        return longitude;
+    }
 
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
 
     public String getDescription() {
         return description;
