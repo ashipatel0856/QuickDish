@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrderLocationsService {
 
-    // Required repos
     private final OrderAddressRepository orderAddressRepository;
 //    private final RestaurantAddressRepository restaurantAddressRepository;
     private final UserAddressRepository userAddressRepository;
@@ -37,7 +36,7 @@ public class OrderLocationsService {
         UserAddress userAddress = userAddressRepository.findById(addressId).orElseThrow(() ->
                 new ResourceNotFoundException("AddressId not found"));
 
-        // ✅ Calculate distance
+        // Calculate distance
         double distanceInKm = CheckNearestDistance.distanceInKm(
                 restaurant.getLatitude(),
                 restaurant.getLongitude(),
@@ -45,26 +44,26 @@ public class OrderLocationsService {
                 userAddress.getLongitude()
         );
 
-        // ✅ Set delivery charges
+        //  set delivery charges according to distances
         double charges = distanceInKm <= 5 ? 20 : 40;
 
-        // ✅ Find nearest delivery rider (just a mock logic)
+        //  Find nearest distanne delivery rider
         DeliveryRider nearestRider = findNearestRider(restaurant.getLatitude(), restaurant.getLongitude());
 
         OrderAdrress orderAdrress = new OrderAdrress();
         orderAdrress.setUser(user);
-        orderAdrress.setRestaurant(restaurant); // Only if you update the field to RestaurantAddress
+        orderAdrress.setRestaurant(restaurant);
         orderAdrress.setUserAddress(userAddress);
-        orderAdrress.setRider(nearestRider); // ✅ FIXED method name
+        orderAdrress.setRider(nearestRider);
         orderAdrress.setDeliveryCharge(charges);
-        orderAdrress.setDeliveryDistance(String.valueOf(distanceInKm)); // ✅ FIXED
+        orderAdrress.setDeliveryDistance(String.valueOf(distanceInKm));
 
 
         return orderAddressRepository.save(orderAdrress);
     }
 
     private DeliveryRider findNearestRider(double lat, double lon) {
-        // For now, just return first rider (you can apply logic using distance calculation)
+        // Find first rider who distance calculations
         return deliveryRiderRepository
                 .findAll()
                 .stream().findFirst()

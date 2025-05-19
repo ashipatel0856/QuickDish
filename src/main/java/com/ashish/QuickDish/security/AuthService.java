@@ -44,12 +44,12 @@ public class AuthService {
 
             User user = userRepository.findByEmail(signUpRequestDto.getEmail()).orElse(null);
             if (user != null) {
-                throw new RuntimeException("User is already registered with the same email");
+                throw new RuntimeException("User has already registered with the same email");
             }
 
             User newUser = modelMapper.map(signUpRequestDto, User.class);
             newUser.setPassword(passwordEncoder.encode(signUpRequestDto.getPassword()));
-            newUser.setVerified(false);  // not verified set data base false before verify otp
+            newUser.setVerified(false);  // not verified set data base false before otp verifications
 
 
             try {
@@ -101,24 +101,23 @@ public class AuthService {
             return jwtService.generateRefreshToken(user);
         }
 
-    public ApiResponse<String> VerifyOtp(OtpRequestDto otpRequestDto) {
 
-            // checking otp record
+        // verify the otp
+    public ApiResponse<String> VerifyOtp(OtpRequestDto otpRequestDto) {
          Otp otp = otpRepository.findByEmail(otpRequestDto.getEmail())
                 .orElseThrow(() -> new RuntimeException("OTP are not found for that email"));
 
-         // checking opt expired or not
+         // checking opt expire or not
         if(otp.getOtpExpiryTime().isBefore(LocalDateTime.now())) {
-            throw  new RuntimeException("your Otp has been expired and  try again");
+            throw  new RuntimeException("Your Otp has been expired then  try again");
         }
 
-        // otp matching checking
+        // checking otp matching or not
         if(!otp.getOtp().equals(otpRequestDto.getOtp())) {
             throw new RuntimeException("OTP does not match");
         }
 
-        // user verifications
-
+        // user verifications by emails
         User user = userRepository.findByEmail(otp.getEmail()).orElseThrow(
                 () -> new RuntimeException("User not found for that email"));
 

@@ -6,6 +6,7 @@ import com.ashish.QuickDish.Entity.User;
 import com.ashish.QuickDish.dto.ReviewRequestDto;
 import com.ashish.QuickDish.dto.ReviewResponseDto;
 import com.ashish.QuickDish.exceptions.ResourceNotFoundException;
+import com.ashish.QuickDish.exceptions.UnAuthorisedException;
 import com.ashish.QuickDish.repository.RestaurantRepository;
 import com.ashish.QuickDish.repository.ReviewRepository;
 import com.ashish.QuickDish.repository.UserRepository;
@@ -17,19 +18,24 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import static com.ashish.QuickDish.utils.AppUtils.getCurrentUser;
+
 @Service
 public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final RestaurantRepository restaurantRepository;
+    private final UserService userService;
+
     private final static Logger log = Logger.getLogger(ReviewServiceImpl.class.getName());
 
-    public ReviewServiceImpl(ReviewRepository reviewRepository, UserRepository userRepository, ModelMapper modelMapper, RestaurantRepository restaurantRepository) {
+    public ReviewServiceImpl(ReviewRepository reviewRepository, UserRepository userRepository, ModelMapper modelMapper, RestaurantRepository restaurantRepository, UserService userService) {
         this.reviewRepository = reviewRepository;
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.restaurantRepository = restaurantRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -56,8 +62,14 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public ReviewResponseDto getReviewById(Long id) {
         log.info("getting  review by id");
+
         Review review = reviewRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("REVIEW NOT FOUND with review Id"));
+
+        User user = getCurrentUser();
+//        if ( !review.getId().equals(user.getId())) {
+//            throw new UnAuthorisedException("YOU ARE NOT UNAUTHORIZED PERSON");
+//        }
         return modelMapper.map(review, ReviewResponseDto.class);
     }
 

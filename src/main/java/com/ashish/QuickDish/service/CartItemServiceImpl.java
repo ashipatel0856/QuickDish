@@ -107,7 +107,8 @@ public class CartItemServiceImpl implements CartItemService {
     @Override
     public List<CartItemResponseDto> getAllCartItemsByUser(Long userId) {
         log.info("get all cartitems by user");
-        List<CartItem> cartItems = (List<CartItem>) cartItemRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("user id not found "));
+        List<CartItem> cartItems = (List<CartItem>) cartItemRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("user id not found "));
         return cartItems.stream()
                 .map(ele ->modelMapper.map(ele,CartItemResponseDto.class))
                 .collect(Collectors.toList());

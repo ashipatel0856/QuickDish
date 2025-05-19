@@ -3,7 +3,6 @@ package com.ashish.QuickDish.controller;
 import com.ashish.QuickDish.Entity.Order;
 import com.ashish.QuickDish.service.CheckoutService;
 import com.ashish.QuickDish.service.OrderService;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +27,9 @@ public class PaymentController {
     public ResponseEntity<?> initPayments(@PathVariable Long orderId) {
         Order order = orderService.getOrderById(orderId);
         if (order == null || order.getPaid()) {
-            return ResponseEntity.badRequest().body("Invalid order or already paid order");
+            return ResponseEntity
+                    .badRequest()
+                    .body("Invalid order or already paid order");
         }
 
         String successUrl = "http://localhost:3000/success";

@@ -3,8 +3,6 @@ package com.ashish.QuickDish.controller;
 import com.ashish.QuickDish.advice.ApiResponse;
 import com.ashish.QuickDish.service.OrderService;
 import com.stripe.model.Event;
-import com.stripe.model.billingportal.Session;
-import com.stripe.net.ApiResource;
 import com.stripe.net.Webhook;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -28,6 +26,7 @@ public class WebHookController {
     public ResponseEntity<ApiResponse> capturePayments(
             @RequestBody(required = false) String payload,
             @RequestHeader(value = "Stripe-Signature", required = false) String signature) {
+
         try {
             if (payload == null || signature == null) {
                 return ResponseEntity
@@ -37,7 +36,7 @@ public class WebHookController {
 
             Event event = Webhook.constructEvent(payload, signature, endpointSecret);
 
-            System.out.println("🔔 Received event type: " + event.getType());
+            System.out.println(" Received event type: " + event.getType());
 
             if ("checkout.session.completed".equals(event.getType())) {
                 com.stripe.model.checkout.Session session = (com.stripe.model.checkout.Session)
@@ -45,17 +44,17 @@ public class WebHookController {
 
                 if (session != null) {
                     String sessionId = session.getId();
-                    System.out.println("✅ Checkout Session completed. Session ID: " + sessionId);
+                    System.out.println(" Checkout Session completed, Session ID: " + sessionId);
                     orderService.markOrderAsPaid(sessionId);
                 } else {
-                    System.out.println("⚠️ Could not deserialize session object.");
+                    System.out.println("Could not deserialize session object.");
                 }
             }
 
             return ResponseEntity.ok(new ApiResponse<>("Webhook received successfully"));
 
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ApiResponse<>("Webhook error: " + e.getMessage()));
         }

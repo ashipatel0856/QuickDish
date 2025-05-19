@@ -35,8 +35,9 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public RestaurantDto createRestaurant(RestaurantDto restaurantDto) {
-        Restaurant restaurant = modelMapper.map(restaurantDto, Restaurant.class);
+        log.info("add new restaurant");
 
+        Restaurant restaurant = modelMapper.map(restaurantDto, Restaurant.class);
         User user = getCurrentUser();
         restaurant.setApproved(false);
         restaurant.setOwner(user);
@@ -63,13 +64,12 @@ public class RestaurantServiceImpl implements RestaurantService {
     public RestaurantDto getRestaurantById(Long id) {
         log.info("geting restaurant with id {}");
         Restaurant restaurant = restaurantRepository.findById(id).orElseThrow(() ->
-                new ResourceNotFoundException("Restaurant are  not found with restaurantID"));
+                new ResourceNotFoundException("Restaurant are  not found with restaurantId"));
 
         User user = getCurrentUser();
         if (restaurant.getOwner() == null || !restaurant.getOwner().getId().equals(user.getId())) {
             throw new UnAuthorisedException("YOU ARE NOT UNAUTHORIZED PERSON");
         }
-
 
         return modelMapper.map(restaurant, RestaurantDto.class);
     }
@@ -82,7 +82,6 @@ public class RestaurantServiceImpl implements RestaurantService {
                 new ResourceNotFoundException("not found restaurant with id"));
 
         User user = getCurrentUser();
-
         if (restaurant.getOwner() == null || !restaurant.getOwner().getId().equals(user.getId())) {
             throw new UnAuthorisedException("YOU ARE NOT ALLOWED");
         }

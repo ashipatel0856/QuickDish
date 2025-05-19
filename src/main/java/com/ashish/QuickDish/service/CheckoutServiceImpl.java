@@ -49,12 +49,13 @@ public class CheckoutServiceImpl implements CheckoutService{
                     .build();
 
                   Session session = Session.create(params) ;
-                  order.setPaymentSessionId(session.getId());
+                  order.setPaymentSessionId(session.getId());// to create payment session id
+                  order.setStatus(order.getStatus());// set status if unpaid -> paid
                   orderRepository.save(order);
                   return session.getUrl();
 
         } catch (Exception ex){
-            throw new RuntimeException("failed to create spripe session ",ex);
+            throw new RuntimeException("failed to create stripe session ",ex);
         }
     }
 
