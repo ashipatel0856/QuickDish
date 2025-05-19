@@ -21,3 +21,4 @@ public class CheckNearestDistance {
         return EARTH_RADIUS * c;
     }
 }
+

@@ -1,5 +1,6 @@
 package com.ashish.QuickDish.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,7 +21,10 @@ public class OrderAdrress {
     private User user;
 
     @ManyToOne
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    @JsonBackReference
     private Restaurant restaurant;
+
     @ManyToOne
     private UserAddress userAddress;
 

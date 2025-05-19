@@ -25,7 +25,6 @@ public class OrderLocationsService {
         this.deliveryRiderRepository = deliveryRiderRepository;
         this.userRepository = userRepository;
     }
-
     public OrderAdrress placeOrder(Long userId, Long restaurantId, Long addressId) {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new ResourceNotFoundException("UserId not found"));
@@ -36,7 +35,16 @@ public class OrderLocationsService {
         UserAddress userAddress = userAddressRepository.findById(addressId).orElseThrow(() ->
                 new ResourceNotFoundException("AddressId not found"));
 
-        // Calculate distance
+        // ✅ Null check karo
+        if (restaurant.getLatitude() == null || restaurant.getLongitude() == null) {
+            throw new RuntimeException("Restaurant location (latitude/longitude) not set");
+        }
+
+        if (userAddress.getLatitude() == null || userAddress.getLongitude() == null) {
+            throw new RuntimeException("User address location (latitude/longitude) not set");
+        }
+
+        // ✅ Distance calculate karo
         double distanceInKm = CheckNearestDistance.distanceInKm(
                 restaurant.getLatitude(),
                 restaurant.getLongitude(),
@@ -44,10 +52,10 @@ public class OrderLocationsService {
                 userAddress.getLongitude()
         );
 
-        //  set delivery charges according to distances
+        // ✅ Delivery charges set karo
         double charges = distanceInKm <= 5 ? 20 : 40;
 
-        //  Find nearest distanne delivery rider
+        // ✅ Nearest rider
         DeliveryRider nearestRider = findNearestRider(restaurant.getLatitude(), restaurant.getLongitude());
 
         OrderAdrress orderAdrress = new OrderAdrress();
@@ -58,9 +66,9 @@ public class OrderLocationsService {
         orderAdrress.setDeliveryCharge(charges);
         orderAdrress.setDeliveryDistance(String.valueOf(distanceInKm));
 
-
         return orderAddressRepository.save(orderAdrress);
     }
+
 
     private DeliveryRider findNearestRider(double lat, double lon) {
         // Find first rider who distance calculations
