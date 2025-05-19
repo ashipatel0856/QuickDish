@@ -13,19 +13,25 @@ public class RiderSeedConfig {
     public CommandLineRunner loadRiders(DeliveryRiderRepository riderRepository) {
         return args -> {
             if (riderRepository.count() == 0) {
-                riderRepository.save(DeliveryRider.builder()
-                        .name("Rider A")
-                        .phone("9876543210")
-                        .latitude(28.6139)
-                        .longitude(77.2090)
-                        .build());
+                DeliveryRider rider = new DeliveryRider();
+                rider.setName("Rider A");
+                rider.setPhone("9876543210");
+                rider.setLatitude(28.6139);
+                rider.setLongitude(77.2090);
+                rider.setAvailable(true);
 
-                riderRepository.save(DeliveryRider.builder()
-                        .name("Rider B")
-                        .phone("9999999999")
-                        .latitude(28.7041)
-                        .longitude(77.1025)
-                        .build());
+                riderRepository.save(rider);
+
+
+                DeliveryRider riders = new DeliveryRider();
+                rider.setName("Rider B");
+                riders.setPhone("98765432g");
+                riders.setLatitude(30.6139);
+                riders.setLongitude(79.2090);
+                riders.setAvailable(true);
+
+                riderRepository.save(rider);
+
             }
         };
     }
