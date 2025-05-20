@@ -1,14 +1,12 @@
-# Use official OpenJDK image
-FROM openjdk:17-jdk-slim
-
-# Set working directory inside container
+# Stage 1: Build the jar
+FROM maven:3.9.6-eclipse-temurin-17 AS builder
 WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
 
-# Copy jar file into the container
-COPY target/QuickDish-0.0.1-SNAPSHOT.jar app.jar
-
-# Expose the port your Spring Boot app runs on (usually 8080)
+# Stage 2: Run the jar
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY --from=builder /app/target/QuickDish-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
-
-# Run the jar file
 CMD ["java", "-jar", "app.jar"]
