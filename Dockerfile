@@ -1,9 +1,14 @@
+# Use official OpenJDK image
 FROM openjdk:17-jdk-slim
 
+# Set working directory inside container
 WORKDIR /app
 
-COPY . .
+# Copy jar file into the container
+COPY target/QuickDish-0.0.1-SNAPSHOT.jar app.jar
 
-RUN apt-get update && apt-get install -y maven && mvn clean install -DskipTests
+# Expose the port your Spring Boot app runs on (usually 8080)
+EXPOSE 8080
 
-CMD ["java", "-jar", "target/QuickDish-0.0.1-SNAPSHOT.jar"]
+# Run the jar file
+CMD ["java", "-jar", "app.jar"]
