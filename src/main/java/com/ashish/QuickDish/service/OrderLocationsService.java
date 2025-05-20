@@ -25,7 +25,7 @@ public class OrderLocationsService {
         this.deliveryRiderRepository = deliveryRiderRepository;
         this.userRepository = userRepository;
     }
-    public OrderAdrress placeOrder(Long userId, Long restaurantId, Long addressId) {
+    public OrderAddress placeOrder(Long userId, Long restaurantId, Long addressId) {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new ResourceNotFoundException("UserId not found"));
 
@@ -35,7 +35,7 @@ public class OrderLocationsService {
         UserAddress userAddress = userAddressRepository.findById(addressId).orElseThrow(() ->
                 new ResourceNotFoundException("AddressId not found"));
 
-        // ✅ Null check karo
+        //  Null check karo
         if (restaurant.getLatitude() == null || restaurant.getLongitude() == null) {
             throw new RuntimeException("Restaurant location (latitude/longitude) not set");
         }
@@ -44,7 +44,7 @@ public class OrderLocationsService {
             throw new RuntimeException("User address location (latitude/longitude) not set");
         }
 
-        // ✅ Distance calculate karo
+        //  Distance calculate karo
         double distanceInKm = CheckNearestDistance.distanceInKm(
                 restaurant.getLatitude(),
                 restaurant.getLongitude(),
@@ -52,13 +52,13 @@ public class OrderLocationsService {
                 userAddress.getLongitude()
         );
 
-        // ✅ Delivery charges set karo
+        //  Delivery charges set karo
         double charges = distanceInKm <= 5 ? 20 : 40;
 
-        // ✅ Nearest rider
+        // Nearest rider
         DeliveryRider nearestRider = findNearestRider(restaurant.getLatitude(), restaurant.getLongitude());
 
-        OrderAdrress orderAdrress = new OrderAdrress();
+        OrderAddress orderAdrress = new OrderAddress();
         orderAdrress.setUser(user);
         orderAdrress.setRestaurant(restaurant);
         orderAdrress.setUserAddress(userAddress);

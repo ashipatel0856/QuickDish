@@ -1,6 +1,6 @@
 package com.ashish.QuickDish.controller;
 
-import com.ashish.QuickDish.Entity.OrderAdrress;
+import com.ashish.QuickDish.Entity.OrderAddress;
 import com.ashish.QuickDish.service.OrderLocationsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,11 +18,11 @@ public class LocationController {
         this.orderLocationsService = orderLocationsService;
     }
     @PostMapping("/place")
-    public ResponseEntity<OrderAdrress> placeOrder(@RequestParam Long userId,
+    public ResponseEntity<OrderAddress> placeOrder(@RequestParam Long userId,
                                                    @RequestParam Long restaurantId,
                                                    @RequestParam Long addressId){
 
-        OrderAdrress orderAdrress = orderLocationsService.placeOrder(userId, restaurantId, addressId);
+        OrderAddress orderAdrress = orderLocationsService.placeOrder(userId, restaurantId, addressId);
         return ResponseEntity.ok(orderAdrress);
     }
 }
