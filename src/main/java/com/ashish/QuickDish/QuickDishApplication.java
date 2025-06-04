@@ -16,8 +16,8 @@ public class QuickDishApplication {
 		System.setProperty("SPRING_MAIL_PASSWORD", dotenv.get("SPRING_MAIL_PASSWORD"));
 		System.setProperty("GOOGLE_MAPS_API_KEY", dotenv.get("GOOGLE_MAPS_API_KEY"));
 		System.setProperty("JWT_SECRET_KEY", dotenv.get("JWT_SECRET_KEY"));
-		System.setProperty("USER_DB", dotenv.get("USER_DB"));
-		System.setProperty("DB_PASSWORD", dotenv.get("DB_PASSWORD"));
+//		System.setProperty("USER_DB", dotenv.get("USER_DB"));
+//		System.setProperty("DB_PASSWORD", dotenv.get("DB_PASSWORD"));
 		SpringApplication.run(QuickDishApplication.class, args);
 	}
 }
