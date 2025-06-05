@@ -8,7 +8,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class QuickDishApplication {
 
 	public static void main(String[] args) {
-		Dotenv dotenv = Dotenv.load();
+
+		Dotenv dotenv = Dotenv.configure()
+				.filename(".env") // default bhi hota hai ".env"
+				.ignoreIfMalformed()
+				.ignoreIfMissing()
+				.load();
 
 		System.setProperty("STRIPE_SECRET_KEY", dotenv.get("STRIPE_SECRET_KEY"));
 		System.setProperty("STRIPE_WEBHOOK_SECRET", dotenv.get("STRIPE_WEBHOOK_SECRET"));
